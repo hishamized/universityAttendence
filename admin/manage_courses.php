@@ -153,6 +153,9 @@ mysqli_close($conn);
                         <a class="nav-link" href="<?php echo BASE_URL ?>">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="admin_dashboard.php">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="btn btn-danger" href="admin_logout.php">Logout Admin ( <?php echo $_SESSION['admin_username'] ?> )</a>
                     </li>
                 </ul>

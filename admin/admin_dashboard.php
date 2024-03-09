@@ -114,7 +114,10 @@ mysqli_close($conn);
                 <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_courses.php">Manage Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 3</a>
+                <a class="nav-link" href="manage_branches.php">Manage Branches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage_classes.php">Manage Classes</a>
             </li>
             <!-- Add more links as needed -->
         </ul>
