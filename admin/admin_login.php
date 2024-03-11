@@ -15,8 +15,12 @@ if (isset($_SESSION['admin_id'])) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = htmlspecialchars(trim($_POST['username']));
+    $password = htmlspecialchars(trim($_POST['password']));
+
+    if (strlen($username) == 0 || strlen($password) == 0) {
+        $error_message[] = "Either username or password field was empty. Please fill the login form completely.";
+    }
 
     // Validate admin credentials
     $query = "SELECT * FROM admins WHERE username = '$username'";
@@ -32,10 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../admin/admin_dashboard.php");
             exit();
         } else {
-            $error_message = "Invalid password";
+            $error_message[] = "Invalid password";
         }
     } else {
-        $error_message = "Admin not found";
+        $error_message[] = "Admin not found";
     }
 }
 ?>
@@ -73,16 +77,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="card-body">
                         <h3 class="card-title text-center mb-4">Admin Login</h3>
                         <?php if (isset($error_message)) : ?>
-                            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+                            <div class="alert alert-danger">
+                                <?php foreach($error_message as $error){
+                                     echo($error);
+                                     echo("<br>");
+                                      } ?>
+                                      </div>
                         <?php endif; ?>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                                <input type="text" class="form-control" id="username" name="username" >
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password" >
                             </div>
                             <button type="submit" class="btn btn-primary">Login</button>
                         </form>

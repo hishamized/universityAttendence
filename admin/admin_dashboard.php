@@ -119,7 +119,9 @@ mysqli_close($conn);
             <li class="nav-item">
                 <a class="nav-link" href="manage_classes.php">Manage Classes</a>
             </li>
-            <!-- Add more links as needed -->
+            <li class="nav-item">
+                <a class="nav-link" href="manage_subjects.php">Manage Subjects</a>
+            </li>
         </ul>
     </div>
 

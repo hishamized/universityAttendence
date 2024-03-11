@@ -235,6 +235,7 @@ if (mysqli_num_rows($result) > 0) {
 
             
             document.getElementById('editBatchForm').style.display = 'block';
+
         }
 
         function closeEditBatchForm() {
