@@ -122,6 +122,10 @@ mysqli_close($conn);
             <li class="nav-item">
                 <a class="nav-link" href="manage_subjects.php">Manage Subjects</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage_staff.php">Manage Staff</a>
+            </li>
+
         </ul>
     </div>
 
