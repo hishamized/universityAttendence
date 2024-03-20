@@ -15,19 +15,22 @@ if (isset($_SESSION['admin_id'])) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = htmlspecialchars(trim($_POST['username']));
+    $identifier = htmlspecialchars(trim($_POST['identifier'])); // Can be either username or email
     $password = htmlspecialchars(trim($_POST['password']));
 
-    if (strlen($username) == 0 || strlen($password) == 0) {
-        $error_message[] = "Either username or password field was empty. Please fill the login form completely.";
+    if (strlen($identifier) == 0 || strlen($password) == 0) {
+        $error_message[] = "Either username/email or password field was empty. Please fill the login form completely.";
     }
 
     // Validate admin credentials
-    $query = "SELECT * FROM admins WHERE username = '$username'";
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM admins WHERE username = ? OR email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('ss', $identifier, $identifier);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $admin = mysqli_fetch_assoc($result);
+    if ($result && $result->num_rows > 0) {
+        $admin = $result->fetch_assoc();
         if (password_verify($password, $admin['password'])) {
             // Admin authenticated, create session and redirect to dashboard
             $_SESSION['admin_id'] = $admin['id'];
@@ -39,9 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error_message[] = "Invalid password";
         }
     } else {
-        $error_message[] = "Admin not found";
+        $error_message[] = "Admin not found. Check login credentials.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endif; ?>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" >
+                                <label for="identifier" class="form-label">Username or Email</label>
+                                <input type="text" class="form-control" id="identifier" name="identifier" >
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>

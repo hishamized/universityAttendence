@@ -123,7 +123,13 @@ mysqli_close($conn);
                 <a class="nav-link" href="manage_subjects.php">Manage Subjects</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="assign_subjects.php">Assign Subjects</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="manage_staff.php">Manage Staff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage_students.php">Manage Students</a>
             </li>
 
         </ul>

@@ -66,20 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editCourse'])) {
     $intakeCapacity = $_POST['editIntakeCapacity'];
     $projectsCount = $_POST['editProjectsCount'];
 
-    // Check if the course already exists
-    $query = "SELECT COUNT(*) FROM courses WHERE slug = ? OR course_name = ?";
-    $statement = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($statement, "ss", $slug, $courseName);
-    mysqli_stmt_execute($statement);
-    mysqli_stmt_bind_result($statement, $count);
-    mysqli_stmt_fetch($statement);
-    mysqli_stmt_close($statement);
-
-    if ($count > 0) {
-        echo '<div class="alert alert-danger" role="alert">Course with the same slug or name already exists</div>';
-        exit();
-    }
-
     // Prepare the SQL statement with parameter binding
     $query = "UPDATE courses SET course_name = ?, slug = ?, duration = ?, subject_count = ?, credits_count = ?, semesters_count = ?, intake_capacity = ?, projects_count = ? WHERE id = ?";
     $statement = mysqli_prepare($conn, $query);
