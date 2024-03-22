@@ -9,13 +9,13 @@ if (!isset($_SESSION['admin_id'])) {
 
 if (isset($_SESSION['error'])) {
     echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error'] . '</div>';
-    unset($_SESSION['error']); 
+    unset($_SESSION['error']);
 }
 
 
 if (isset($_SESSION['success'])) {
     echo '<div class="alert alert-success" role="alert">' . $_SESSION['success'] . '</div>';
-    unset($_SESSION['success']); 
+    unset($_SESSION['success']);
 }
 require_once('../config.php');
 
@@ -28,12 +28,12 @@ mysqli_stmt_bind_result($courses, $course_id, $course_name);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['findSubjects'])) {
-    
+
     $course_id = trim($_POST['course']);
     $branch_id = trim($_POST['branch']);
     $semester = trim($_POST['semester']);
 
-    
+
     $query = "SELECT s.id, s.name, ss.staff_id 
               FROM subjects s 
               LEFT JOIN subject_staff ss ON s.id = ss.subject_id
@@ -43,33 +43,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['findSubjects'])) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
 
-    
+
     mysqli_stmt_bind_result($stmt, $subject_id, $subject_name, $staff_id);
 
-    
+
     $subjects = array();
     while (mysqli_stmt_fetch($stmt)) {
-        
+
         if (!isset($subjects[$subject_id])) {
             $subjects[$subject_id] = array(
                 'name' => $subject_name,
                 'staff' => array(),
             );
         }
-        
+
         if ($staff_id !== null) {
             $subjects[$subject_id]['staff'][] = $staff_id;
         }
     }
 
-    
+
     mysqli_stmt_close($stmt);
 
-    
+
     $staff_query = "SELECT id, full_name FROM staff";
     $staff_result = mysqli_query($conn, $staff_query);
 
-    
+
     $staff_members = array();
     while ($row = mysqli_fetch_assoc($staff_result)) {
         $staff_members[$row['id']] = $row['full_name'];
@@ -77,11 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['findSubjects'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assignStaff'])) {
-    
+
     $subject_id = trim($_POST['subject_id']);
     $staff_id = trim($_POST['staff_id']);
 
-    
+
     $query = "SELECT COUNT(*) FROM subject_staff WHERE subject_id = ? AND staff_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ii", $subject_id, $staff_id);
@@ -90,43 +90,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assignStaff'])) {
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
 
-    
+
     if ($count > 0) {
         $_SESSION['error'] = "Assignment already exists for the selected staff and subject.";
         header("Location: assign_subjects.php");
         exit();
     }
 
-    
+
     $query = "INSERT INTO subject_staff (subject_id, staff_id) VALUES (?, ?)";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ii", $subject_id, $staff_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    
+
     $_SESSION['success'] = "Staff assigned to the subject successfully.";
     header("Location: assign_subjects.php");
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dismissStaff'])){
-    
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dismissStaff'])) {
+
     $subject_id = trim($_POST['subject_id']);
     $staff_id = trim($_POST['staff_id']);
 
-    
+
     $query = "DELETE FROM subject_staff WHERE subject_id = ? AND staff_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "ii", $subject_id, $staff_id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    
+
     $_SESSION['success'] = "Staff dismissed from the subject successfully.";
     header("Location: assign_subjects.php");
     exit();
-} 
+}
 
 
 ?>
@@ -225,6 +225,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dismissStaff'])){
                 </thead>
                 <tbody>
                     <?php if (isset($subjects)) : ?>
+                        <?php
+                        if (empty($subjects)) : ?>
+                            <div class="alert alert-info" role="alert">
+                                No Records Found!
+                            </div>
+
+                        <?php endif; ?>
                         <?php foreach ($subjects as $subject_id => $subject) : ?>
                             <tr>
                                 <td><?= $subject['name'] ?></td>
@@ -235,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dismissStaff'])){
                                             <form method="POST" action="assign_subjects.php">
                                                 <input type="hidden" name="staff_id" value="<?= $staff_id ?>">
                                                 <input type="hidden" name="subject_id" value="<?= $subject_id ?>">
-                                            <button type="submit" name="dismissStaff" class="btn btn-danger m-1" data-staff="<?= $staff_id ?>" data-subject="<?= $subject_id ?>">Dismiss</button>
+                                                <button type="submit" name="dismissStaff" class="btn btn-danger m-1" data-staff="<?= $staff_id ?>" data-subject="<?= $subject_id ?>">Dismiss</button>
                                             </form>
                                         </div>
                                     <?php endforeach; ?>
@@ -271,4 +278,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dismissStaff'])){
 
 <?php
 mysqli_stmt_close($courses);
+$conn->close();
 ?>

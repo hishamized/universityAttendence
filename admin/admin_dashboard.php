@@ -131,7 +131,9 @@ mysqli_close($conn);
             <li class="nav-item">
                 <a class="nav-link" href="manage_students.php">Manage Students</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="manage_timeTable.php">Manage Time Table</a>
+            </li>
         </ul>
     </div>
 
