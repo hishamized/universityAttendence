@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editTimeTable'])) {
                 </div>
                 <div class="mb-3">
                     <label for="endTime" class="form-label">End Time</label>
-                    <input type="time" id="endTime" name="endTime" class="form-control" required>
+                    <input onchange="calculateDuration(this.id, 'startTime', 'duration')" type="time" id="endTime" name="endTime" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="classId" class="form-label">Class</label>
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editTimeTable'])) {
                     <th scope="col">Subject Name</th>
                     <th scope="col">Class Id</th>
                     <th scope="col">Subject Id</th>
-                    <th scope="col">Duration</th>
+                    <th scope="col">Duration (minutes)</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>

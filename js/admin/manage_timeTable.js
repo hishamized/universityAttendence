@@ -82,3 +82,17 @@ function editTimeTable(id){
         const modal = new bootstrap.Modal(document.getElementById('editModal'));
         modal.show();
 }
+
+function calculateDuration(endTimeId, startTimeId, durationId) {
+    var endTimeString = document.getElementById(endTimeId).value;
+    var startTimeString = document.getElementById(startTimeId).value;
+
+    var endTime = new Date('2000-01-01 ' + endTimeString);
+    var startTime = new Date('2000-01-01 ' + startTimeString);
+
+    var differenceMs = endTime - startTime;
+
+    var differenceMinutes = Math.floor(differenceMs / (1000 * 60));
+
+    document.getElementById(durationId).value = differenceMinutes;
+}

@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('Asia/Kolkata');
+
 define( 'ROOT_PATH', dirname(__FILE__) );
 define( 'BASE_URL', 'http://localhost/kashmirUniversity' );
 $host = "localhost"; 
