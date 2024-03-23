@@ -1,5 +1,6 @@
 <?php
 require_once('../config.php');
+
 if( isset($_GET['subject_id']) && $_GET['action'] === "fetch_staff"){
     $subject_id = intval($_GET['subject_id']);
     $query = "SELECT staff.id, staff.full_name FROM staff INNER JOIN subject_staff ON staff.id = subject_staff.staff_id WHERE subject_staff.subject_id = ?";

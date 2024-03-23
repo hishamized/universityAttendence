@@ -1,6 +1,7 @@
 <?php
 require_once('../config.php');
 
+
 // Check if class_id is set and action is fetch_subjects
 if (isset($_GET['class_id']) && $_GET['action'] === "fetch_subjects") {
     // Sanitize input to prevent SQL injection

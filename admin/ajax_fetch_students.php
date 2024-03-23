@@ -1,6 +1,7 @@
 <?php
 require_once('../config.php');
 
+
 if(isset($_GET['class_id']) && $_GET['action'] === "fetch_students"){
     $class_id = intval($_GET['class_id']);
     $query = "SELECT students.id, students.full_name, students.university_enroll , students.class_roll_number FROM students WHERE class_id = ?";

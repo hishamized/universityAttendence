@@ -111,6 +111,9 @@ mysqli_close($conn);
                 <a class="nav-link" href="manage_attendance.php">Manage Attendance</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="edit_attendance.php">Edit Attendance</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_batches.php">Manage Batches</a>
             </li>
             <li class="nav-item">

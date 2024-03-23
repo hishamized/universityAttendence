@@ -1,5 +1,6 @@
 <?php
 require_once('../config.php');
+
 if (isset($_GET['course_id']) && $_GET['action'] === 'fetch_branches') {
     // Sanitize and validate the input
     $course_id = $_GET['course_id'];
