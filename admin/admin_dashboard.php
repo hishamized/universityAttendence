@@ -140,6 +140,9 @@ mysqli_close($conn);
             <li class="nav-item">
                 <a class="nav-link" href="manage_timeTable.php">Manage Time Table</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="accountSettings.php">Account Settings</a>
+            </li>
         </ul>
     </div>
 
