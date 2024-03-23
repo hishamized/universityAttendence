@@ -26,3 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
 function hideEditForm(form) {
   form.style.display = "none";
 }
+
+function submitForm() {
+    // Validate admin password and submit form
+    var passwordInput = document.getElementById('adminPassword').value;
+    if (passwordInput !== '') {
+      document.getElementById('deleteForm').submit();
+    } else {
+      alert('Please enter your admin password.');
+    }
+  }
+
+  function openDeleteModal() {
+    $('#deleteModal').modal('show');
+}

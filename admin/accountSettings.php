@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Check if admin is not logged in, redirect to login page
+
 if (!isset($_SESSION['admin_id'])) {
     header("Location: admin_login.php");
     exit();
@@ -18,13 +18,13 @@ if (isset($_SESSION['success'])) {
 }
 require_once('../config.php');
 
-//Retrive admin details from databse
+
 $admin_id = $_SESSION['admin_id'];
 $query = "SELECT * FROM admins WHERE id = '$admin_id'";
 $result = mysqli_query($conn, $query);
 $admin = mysqli_fetch_assoc($result);
 
-//Edit admin profile
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST'  && isset($_POST['editProfile'])) {
     $full_name = htmlspecialchars(trim($_POST['full_name']));
     $status = htmlspecialchars(trim($_POST['status']));
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'  && isset($_POST['editProfile'])) {
     }
 }
 
-// Change password 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['changePassword'])) {
     $current_password = htmlspecialchars(trim($_POST['current_password']));
     $new_password = htmlspecialchars(trim($_POST['new_password']));
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['changePassword'])) {
         exit();
     }
 
-    if (!preg_match('/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'  , $new_password)) {
+    if (!preg_match('/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/', $new_password)) {
         $_SESSION['error'] = 'Password should be Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character';
         header('Location: accountSettings.php');
         exit();
@@ -87,6 +87,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['changePassword'])) {
         exit();
     }
 }
+
+
+
+
+if (isset($_POST['deleteAdminId']) && isset($_POST['adminPassword'])) {
+    
+    $countQuery = "SELECT COUNT(*) AS adminCount FROM admins";
+    $countResult = $conn->query($countQuery);
+
+    if ($countResult && $countResult->num_rows > 0) {
+        $row = $countResult->fetch_assoc();
+        $adminCount = $row['adminCount'];
+
+        
+        if ($adminCount <= 1) {
+            
+            $_SESSION['error'] = "Cannot delete the last admin.";
+            header("Location: accountSettings.php");
+            exit();
+        } else {
+            
+            $adminId = $_POST['deleteAdminId'];
+            $adminPassword = $_POST['adminPassword'];
+
+            $fetchAdminQuery = "SELECT password FROM admins WHERE id = '$adminId'";
+            $fetchAdminResult = $conn->query($fetchAdminQuery);
+            $adminDbPassword = $fetchAdminResult->fetch_assoc()['password'];
+
+            $validPassword = password_verify($adminPassword, $adminDbPassword);
+
+            if ($validPassword) {
+                $_SESSION['success'] = "Admin account deleted successfully.";
+                header("Location: admin_logout.php");
+                
+                $deleteQuery = "DELETE FROM admins WHERE id = ?";
+                $stmt = $conn->prepare($deleteQuery);
+                $stmt->bind_param("i", $adminId);
+                $stmt->execute();
+
+                
+                
+                exit();
+            } else {
+                
+                $_SESSION['error'] = "Invalid admin password.";
+                header("Location: accountSettings.php");
+                exit();
+            }
+        }
+    } else {
+        
+        $_SESSION['error'] = "Error occurred while fetching admin count.";
+        header("Location: accountSettings.php");
+        exit();
+    }
+
+} 
 
 ?>
 
@@ -201,6 +258,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['changePassword'])) {
         </form>
     </div>
 
+    <div class="container mt-5">
+    <button type="button" class="btn btn-danger" onclick="openDeleteModal()">
+        Delete Account
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="deleteForm" method="POST" action="accountSettings.php">
+                    <div class="form-group">
+                        <label for="adminPassword">Enter Admin Password:</label>
+                        <input type="password" class="form-control" id="adminPassword" name="adminPassword" required>
+                    </div>
+                    <!-- Hidden input for admin ID -->
+                    <input type="hidden" name="deleteAdminId" id="deleteAdminId" value="<?php echo $admin['id'] ?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="submitForm()">Confirm Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

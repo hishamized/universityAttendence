@@ -146,8 +146,6 @@ mysqli_close($conn);
         </ul>
     </div>
 
-
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const sidebar = document.getElementById('sidebar');
