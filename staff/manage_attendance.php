@@ -2,8 +2,8 @@
 session_start();
 
 
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
+if (!isset($_SESSION['staff_id'])) {
+    header("Location: staff_login.php");
     exit();
 }
 if (isset($_SESSION['error'])) {
@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
         
         $student_id = $student_ids[$i];
         $status = $_POST['student' . ($i + 1)]; 
-
         
         $stmt->execute();
 
@@ -77,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
     <script src="https://kit.fontawesome.com/1bc2765d38.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="../js/admin/manage_attendance.js"></script>
+    <script type="text/javascript" src="../js/staff/manage_attendance.js"></script>
 </head>
 
 <body>
@@ -94,10 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
                         <a class="nav-link" href="<?php echo BASE_URL ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="admin_dashboard.php">Admin Dashboard</a>
+                        <a class="nav-link" href="staff_dashboard.php">staff Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-danger" href="admin_logout.php">Logout Admin ( <?php echo $_SESSION['admin_username'] ?> )</a>
+                        <a class="btn btn-danger" href="staff_logout.php">Logout staff ( <?php echo $_SESSION['staff_username'] ?> )</a>
                     </li>
                 </ul>
             </div>
@@ -108,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
     <div class="container m-5">
         <h3>Mark Attendance</h3>
         <form action="manage_attendance.php" method="POST">
+            <input type="hidden" id="staffId" name="staffId" value="<?= $_SESSION['staff_id']?>">
             <div class="m-b">
                 <label for="selectDate">Select Date</label>
                 <input type="date" class="form-control" id="selectDate" name="date" value="<?php echo date('Y-m-d') ?>">
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
             </div>
             <div class="mb-">
                 <label for="selectClass">Select Class</label>
-                <select onchange="findSubjects(this.id, 'selectSubject'); fetchStudents(this.id);" class="form-select" id="selectClass" name="class_id">
+                <select onchange="findSubjects(this.id, 'selectSubject', 'staffId'); fetchStudents(this.id);" class="form-select" id="selectClass" name="class_id">
                     <option value="default" selected>Select Class</option>
                     <?php foreach ($classes as $class) : ?>
                         <option value="<?php echo $class['id'] ?>"><?php echo $class['name'] ?></option>
@@ -129,18 +129,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
 
             <div class="mb-3">
                 <label for="selectSubject">Select Subject</label>
-                <select onchange="findTeacher(this.id, 'selectTeacher')" class="form-select" id="selectSubject" name="subject_id" disabled>
+                <select class="form-select" id="selectSubject" name="subject_id" disabled>
                     <option value="default">Select Subject</option>
                     <!-- More options will be populated using javascript -->
                 </select>
             </div>
-            <div class="mb-3">
-                <label for="selectTeacher">Select Teacher</label>
-                <select class="form-select" id="selectTeacher" name="teacher_id" disabled required>
-                    <option value="default">Select Teacher</option>
-                    <!-- More options will be populated using javascript -->
-                </select>
-            </div>
+
+            <input type="hidden" value="<?= $_SESSION['staff_id']?>" id="selectTeacher" name="teacher_id" required>
 
             <div id="attendanceContainer">
                 <!-- Attendance will be populated using javascript -->
