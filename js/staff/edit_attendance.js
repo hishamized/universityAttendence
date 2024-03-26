@@ -1,4 +1,5 @@
-function findSubjects(class_id, subject_id) {
+function findSubjects(class_id, subject_id, staffId) {
+    var staff = document.getElementById(staffId).value;
     var classSelect = document.getElementById(class_id);
     var subjectSelect = document.getElementById(subject_id);
     if (classSelect.value != "default") {
@@ -10,8 +11,8 @@ function findSubjects(class_id, subject_id) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "ajax_fetch_subjects.php?action=fetch_subjects&class_id=" +
-        classSelect.value,
+        "ajax_fetch_subjects.php?action=fetch_subjects&class_id=" +
+          classSelect.value + "&staff_id=" + staff,
       true
     );
     xhr.onreadystatechange = function () {
@@ -74,34 +75,34 @@ function findSubjects(class_id, subject_id) {
         console.error('There was a problem with the fetch operation:', error);
     });
 }
-
 function printAttendanceTable() {
-  var container = document.getElementById("attendance_container");
-  var containerStyle = window.getComputedStyle(container);
-  var tableHTML = container.outerHTML;
+    var container = document.getElementById("attendance_container");
+    var containerStyle = window.getComputedStyle(container);
+    var tableHTML = container.outerHTML;
 
-  var printWindow = window.open("", "_blank");
-  printWindow.document.write(`
-      <html>
-          <head>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-              <style>
-                  ${containerStyle.cssText}
-                  @media print {
-                      .btn {
-                          display: none;
-                      }
-                  }
-                  
-              </style>
-          </head>
-          <body>
-              ${tableHTML}
-          </body>
-      </html>
-  `);
+    var printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+        <html>
+            <head>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+                <style>
+                    ${containerStyle.cssText}
+                    @media print {
+                        .btn {
+                            display: none;
+                        }
+                    }
+                    
+                </style>
+            </head>
+            <body>
+                ${tableHTML}
+            </body>
+        </html>
+    `);
 
-  printWindow.document.close();
-  printWindow.print();
+    printWindow.document.close();
+    printWindow.print();
 }
+
 
