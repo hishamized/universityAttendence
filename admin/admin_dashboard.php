@@ -93,13 +93,23 @@ mysqli_close($conn);
     </nav>
 
 
-    <div class="container mt-5" id="main-content">
+    <div class="container my-5" id="main-content">
         <h1>Welcome, <?php echo $admin['username']; ?></h1>
         <p>This is the Admin Dashboard!</p>
-        <!-- Add your admin dashboard content here -->
-        <p>This is the admin dashboard. You can add your content here.</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Welcome to the Admin Dashboard. As an administrator, you have access to a wide range of features to manage the institution's operations effectively. You can add, remove, and edit student and staff member profiles, as well as manage other administrators. Additionally, you can oversee attendance tracking by marking and editing attendances, and exporting attendance data as PDF for analysis.
+
+                        Furthermore, you have the ability to manage batches, courses, classes, and subjects, allowing you to organize and structure the educational curriculum efficiently. Whether it's adding new batches, removing outdated courses, or editing class schedules, you have the tools to streamline administrative tasks and ensure smooth operations.
+
+                        Should you require any assistance or encounter any issues while using the dashboard, please don't hesitate to reach out for support. Our team is here to assist you and ensure that your administrative tasks are carried out seamlessly.</p>
+                </div>
+            </div>
+        </div>
+
         <a href="admin_logout.php" class="btn btn-danger">Logout</a>
-        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>Sidebar</button>
+        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
     </div>
 
 
@@ -124,6 +134,9 @@ mysqli_close($conn);
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="manage_classes.php">Manage Classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="promote_classes.php">Promote Classes</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="manage_subjects.php">Manage Subjects</a>
