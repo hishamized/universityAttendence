@@ -1,21 +1,21 @@
 <?php
-// Start session to check if admin is logged in
+// Start session to check if student is logged in
 session_start();
 
-// Check if staff is not logged in, redirect to login page
-if (!isset($_SESSION['staff_id'])) {
-    header("Location: staff_login.php");
+// Check if student is not logged in, redirect to login page
+if (!isset($_SESSION['student_id'])) {
+    header("Location: student_login.php");
     exit();
 }
 
 // Include database configuration
 require_once '../config.php';
 
-// Retrieve staff information from the database
-$staff_id = $_SESSION['staff_id'];
-$query = "SELECT * FROM staff WHERE id = '$staff_id'";
+// Retrieve student information from the database
+$student_id = $_SESSION['student_id'];
+$query = "SELECT * FROM students WHERE id = '$student_id'";
 $result = mysqli_query($conn, $query);
-$staff = mysqli_fetch_assoc($result);
+$student = mysqli_fetch_assoc($result);
 
 // Close database connection
 mysqli_close($conn);
@@ -27,7 +27,7 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>staff Dashboard</title>
+    <title>student Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -85,7 +85,7 @@ mysqli_close($conn);
                         <a class="nav-link" href="<?php echo BASE_URL ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-danger" href="staff_logout.php">staff Logout ( <?php echo $_SESSION['staff_username'] ?> )</a>
+                        <a class="btn btn-danger" href="student_logout.php">student Logout ( <?php echo $_SESSION['student_username'] ?> )</a>
                     </li>
                 </ul>
             </div>
@@ -94,17 +94,17 @@ mysqli_close($conn);
 
 
     <div class="container my-5" id="main-content">
-        <h1>Welcome, <?php echo $staff['username']; ?></h1>
-        <p>This is the staff Dashboard!</p>
+        <h1>Welcome, <?php echo $student['username']; ?></h1>
+        <p>This is the student Dashboard!</p>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>Welcome to the Staff Dashboard. Here, you can perform various tasks such as marking attendance, editing attendance records, exporting attendance data as PDF, managing your profile, and deleting your account. Use the navigation menu or buttons provided to access different functionalities. If you have any questions or need assistance, please contact the administrator.</p>
+                    <p>Welcome to your Student Dashboard. Here, you can manage your profile information, monitor your attendance records, and stay updated on your academic progress. Use the provided options to view your attendance history, update your personal details, and access any additional resources provided by the institution. If you have any questions or need assistance, feel free to reach out to your teachers or the administrative staff for support.</p>
                 </div>
             </div>
         </div>
 
-        <a href="staff_logout.php" class="btn btn-danger">Logout</a>
+        <a href="student_logout.php" class="btn btn-danger">Logout</a>
         <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
     </div>
 
@@ -114,16 +114,10 @@ mysqli_close($conn);
         <a href="#" class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></a>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 1</a>
+                <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="manage_attendance.php">Manage Attendance</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="edit_attendance.php">Edit Attendance</a>
+                <a class="nav-link" href="my_attendance.php">My Attendance</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="accountSettings.php">Account Settings</a>

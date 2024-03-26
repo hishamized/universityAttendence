@@ -16,7 +16,7 @@
             <a class="nav-link" href="<?php echo BASE_URL ?>/staff/staff_login.php">Staff Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Student Login</a>
+            <a class="nav-link" href="<?php echo BASE_URL ?>/student/student_login.php">Student Login</a>
           </li>
       </ul>
     </div>
