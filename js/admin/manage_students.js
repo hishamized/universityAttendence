@@ -81,3 +81,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+  // JavaScript code to filter students based on class
+  document.addEventListener('DOMContentLoaded', function () {
+    const classFilter = document.getElementById('classFilter');
+    const studentsTable = document.getElementById('studentsTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    classFilter.addEventListener('change', function () {
+        const selectedClassId = classFilter.value;
+
+        // Loop through each student row and toggle visibility based on selected class
+        for (let i = 0; i < studentsTable.length; i++) {
+            const classId = studentsTable[i].getAttribute('data-class-id');
+            if (selectedClassId === '' || classId === selectedClassId) {
+                studentsTable[i].style.display = '';
+            } else {
+                studentsTable[i].style.display = 'none';
+            }
+        }
+    });
+});
+

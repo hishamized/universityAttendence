@@ -305,8 +305,21 @@ if (mysqli_num_rows($result) > 0) {
         </form>
     </div>
 
-    <div class="container m-5 table-container">
-        <table class="table">
+
+    <div class="container mt-5">
+        <!-- Add a select dropdown to filter students by class -->
+        <label for="classFilter">Filter by Class:</label>
+        <select id="classFilter" class="form-select mb-3">
+            <option value="">All Classes</option>
+            <?php
+            foreach ($classOptions as $class) {
+                echo "<option value='" . $class['class_id'] . "'>" . $class['name'] . "</option>";
+            }
+            ?>
+        </select>
+
+    <div class="container m-2 table-container">
+        <table id="studentsTable" class="table">
             <thead>
                 <tr>
                     <th>Actions</th>
@@ -329,7 +342,7 @@ if (mysqli_num_rows($result) > 0) {
             </thead>
             <tbody>
                 <?php foreach ($students as $student) : ?>
-                    <tr id="studentRow<?= $student['id'] ?>">
+                    <tr id="studentRow<?= $student['id'] ?>" data-class-id="<?= $student['class_id'] ?>">
                         <td>
                             <button class="btn btn-primary my-2" onclick="editStudent(<?= $student['id'] ?>)">Edit</button>
                             <button class="btn btn-danger my-2">Delete</button>

@@ -19,7 +19,7 @@ if (isset($_SESSION['success'])) {
 require_once('../config.php');
 
 
-$query = "SELECT id, name FROM classes";
+$query = "SELECT id, name FROM classes WHERE status = 'active' ORDER BY name ASC;";
 $result = mysqli_query($conn, $query);
 $classes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -33,6 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newAttendence'])) {
     $teacher_id = $_POST['teacher_id'];
     $studentCount = $_POST['studentCount'];
     $student_ids = $_POST['student_ids'];
+
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM attendance WHERE date = ? AND subject_id = ? AND class_id = ?");
+    $stmt->bind_param("sii", $date, $subject_id, $class_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->fetch_row()[0] > 0) {
+        $_SESSION['error'] = "Attendance already marked for this subject and class on this date";
+        header("Location: manage_attendance.php");
+        exit();
+    }
 
 
     

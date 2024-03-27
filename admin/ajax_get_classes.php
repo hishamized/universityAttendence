@@ -3,7 +3,7 @@
 include '../config.php';
 
 
-$query = "SELECT id, name FROM classes";
+$query = "SELECT id, name FROM classes;";
 $result = mysqli_query($conn, $query);
 
 

@@ -10,13 +10,13 @@
           <a class="nav-link" href="<?php echo BASE_URL ?>">Home</a>
         </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo BASE_URL ?>/admin/admin_login.php">Admin Login</a>
+            <a class="nav-link" href="<?php echo BASE_URL ?>/admin/admin_login">Admin Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo BASE_URL ?>/staff/staff_login.php">Staff Login</a>
+            <a class="nav-link" href="<?php echo BASE_URL ?>/staff/staff_login">Staff Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo BASE_URL ?>/student/student_login.php">Student Login</a>
+            <a class="nav-link" href="<?php echo BASE_URL ?>/student/student_login">Student Login</a>
           </li>
       </ul>
     </div>

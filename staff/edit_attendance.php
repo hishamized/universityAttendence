@@ -18,7 +18,7 @@ if (isset($_SESSION['success'])) {
 }
 require_once('../config.php');
 
-$query = "SELECT id, name FROM classes";
+$query = "SELECT id, name FROM classes WHERE status = 'active' ORDER BY name ASC;";
 $result = mysqli_query($conn, $query);
 $classes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 

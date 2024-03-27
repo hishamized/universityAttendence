@@ -118,43 +118,43 @@ mysqli_close($conn);
         <a href="#" class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></a>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="manage_attendance.php">Manage Attendance</a>
+                <a class="nav-link" href="manage_attendance">Manage Attendance</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="edit_attendance.php">Edit Attendance</a>
+                <a class="nav-link" href="edit_attendance">Edit Attendance</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_batches.php">Manage Batches</a>
+                <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_batches">Manage Batches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_courses.php">Manage Courses</a>
+                <a class="nav-link" href="<?php echo BASE_URL ?>/admin/manage_courses">Manage Courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_branches.php">Manage Branches</a>
+                <a class="nav-link" href="manage_branches">Manage Branches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_classes.php">Manage Classes</a>
+                <a class="nav-link" href="manage_classes">Manage Classes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="promote_classes.php">Promote Classes</a>
+                <a class="nav-link" href="promote_classes">Promote Classes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_subjects.php">Manage Subjects</a>
+                <a class="nav-link" href="manage_subjects">Manage Subjects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="assign_subjects.php">Assign Subjects</a>
+                <a class="nav-link" href="assign_subjects">Assign Subjects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_staff.php">Manage Staff</a>
+                <a class="nav-link" href="manage_staff">Manage Staff</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_students.php">Manage Students</a>
+                <a class="nav-link" href="manage_students">Manage Students</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manage_timeTable.php">Manage Time Table</a>
+                <a class="nav-link" href="manage_timeTable">Manage Time Table</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="accountSettings.php">Account Settings</a>
+                <a class="nav-link" href="accountSettings">Account Settings</a>
             </li>
         </ul>
     </div>
