@@ -156,6 +156,9 @@ mysqli_close($conn);
             <li class="nav-item">
                 <a class="nav-link" href="accountSettings">Account Settings</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage_admins.php">Manage Admins</a>
+            </li>
         </ul>
     </div>
 
