@@ -114,13 +114,10 @@ mysqli_close($conn);
         <a href="#" class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></a>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="manage_attendance.php">Manage Attendance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="extract_attendance.php">Extract Attendance</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="edit_attendance.php">Edit Attendance</a>

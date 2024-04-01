@@ -96,16 +96,15 @@ mysqli_close($conn);
     <div class="container my-5" id="main-content">
         <h1>Welcome, <?php echo $student['username']; ?></h1>
         <p>This is the student Dashboard!</p>
-        <div class="container">
+        <a href="student_logout.php" class="btn btn-danger">Logout</a>
+        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
+        <div class="container my-3">
             <div class="row">
                 <div class="col-md-12">
                     <p>Welcome to your Student Dashboard. Here, you can manage your profile information, monitor your attendance records, and stay updated on your academic progress. Use the provided options to view your attendance history, update your personal details, and access any additional resources provided by the institution. If you have any questions or need assistance, feel free to reach out to your teachers or the administrative staff for support.</p>
                 </div>
             </div>
         </div>
-
-        <a href="student_logout.php" class="btn btn-danger">Logout</a>
-        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
     </div>
 
 
@@ -114,10 +113,10 @@ mysqli_close($conn);
         <a href="#" class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></a>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="my_attendance.php">My Attendance</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="my_attendance.php">My Attendance</a>
+                <a class="nav-link" href="time_table.php">View Time Table</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="accountSettings.php">Account Settings</a>

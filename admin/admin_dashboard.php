@@ -96,7 +96,9 @@ mysqli_close($conn);
     <div class="container my-5" id="main-content">
         <h1>Welcome, <?php echo $admin['username']; ?></h1>
         <p>This is the Admin Dashboard!</p>
-        <div class="container">
+        <a href="admin_logout.php" class="btn btn-danger">Logout</a>
+        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
+        <div class="container my-3">
             <div class="row">
                 <div class="col-md-12">
                     <p>Welcome to the Admin Dashboard. As an administrator, you have access to a wide range of features to manage the institution's operations effectively. You can add, remove, and edit student and staff member profiles, as well as manage other administrators. Additionally, you can oversee attendance tracking by marking and editing attendances, and exporting attendance data as PDF for analysis.
@@ -107,9 +109,6 @@ mysqli_close($conn);
                 </div>
             </div>
         </div>
-
-        <a href="admin_logout.php" class="btn btn-danger">Logout</a>
-        <button class="btn btn-success" id="toggleSidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i>&nbsp Sidebar</button>
     </div>
 
 
@@ -119,6 +118,9 @@ mysqli_close($conn);
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="manage_attendance">Manage Attendance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="extract_attendance">Extract Attendacne</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="edit_attendance">Edit Attendance</a>
